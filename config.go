@@ -7,7 +7,12 @@ import (
 
 func GetConfigFromEnv[T any]() T {
 	var config T
-	sVal := reflect.ValueOf(&config).Elem()
+	LoadConfigFromEnv(&config)
+	return config
+}
+
+func LoadConfigFromEnv[T any](config *T) *T {
+	sVal := reflect.ValueOf(config).Elem()
 	sType := sVal.Type()
 	for i := 0; i < sType.NumField(); i++ {
 		fVal := sVal.Field(i)
